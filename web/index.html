@@ -1,0 +1,77 @@
+<html lang="en">
+<head>
+  <base href="/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">  <!-- Updated -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="iotbasedparking">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>iotbasedparking</title>
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Firebase SDKs (use ES modules for Firebase v9+) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+    import { getMessaging } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js";
+
+    // Firebase configuration copied from the Firebase Console
+    const firebaseConfig = {
+      apiKey: "AIzaSyAGnXvKWz4h3JS8Od67jczyAQRaHxYS8wg",
+      authDomain: "smart-parking-1130e.firebaseapp.com",
+      projectId: "smart-parking-1130e",
+      storageBucket: "smart-parking-1130e.appspot.com",
+      messagingSenderId: "247859388587",
+      appId: "1:247859388587:web:2b755be2e84bba165057ee",
+      measurementId: "G-RPGD8XKFR9"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const firestore = getFirestore(app);
+    const messaging = getMessaging(app);
+  </script>
+
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    var serviceWorkerVersion = "1865361023";
+  </script>
+
+  <!-- This script adds the Flutter initialization JS code -->
+  <script src="flutter.js" defer></script>
+</head>
+<body>
+<script>
+  window.addEventListener('load', function(ev) {
+    _flutter.loader.load({
+      serviceWorker: {
+        serviceWorkerVersion: serviceWorkerVersion,
+      },
+      onEntrypointLoaded: function(engineInitializer) {
+        engineInitializer.initializeEngine().then(function(appRunner) {
+          appRunner.runApp();
+        });
+      }
+    });
+  });
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
