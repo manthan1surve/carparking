@@ -62,7 +62,7 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
+    implementation 'com.google.android.gms:play-services-auth:19.2.0'
     // Firebase BOM to manage all Firebase dependencies
     implementation platform('com.google.firebase:firebase-bom:32.0.0')
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'login_page.dart'; // Assuming you have this page for login
+import 'login_page.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -11,72 +11,62 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-
-  bool _isEditing = false; // Flag to track if editing is enabled
-
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseDatabase _database = FirebaseDatabase.instance;
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
+  bool _isEditing = false; // Track if the user is in editing mode
+  final _auth = FirebaseAuth.instance;
+  final _database = FirebaseDatabase.instance;
 
   @override
   void initState() {
     super.initState();
-    _fetchUserProfile(); // Fetch user data initially
+    _fetchUserProfile();
   }
 
+  // Fetch the user profile data from Firebase Realtime Database
   Future<void> _fetchUserProfile() async {
-    User? user = _auth.currentUser;
+    final user = _auth.currentUser;
     if (user != null) {
-      _emailController.text = user.email ?? '';
-      DataSnapshot snapshot = await _database.ref('users/${user.uid}').get();
+      _emailController.text = user.email ?? '';  // Email fetched from FirebaseAuth (can't be changed by user)
+      final snapshot = await _database.ref('users/${user.uid}').get();
       if (snapshot.exists) {
-        var userData = snapshot.value as Map<dynamic, dynamic>;
+        final userData = snapshot.value as Map;
         _nameController.text = userData['name'] ?? '';
         _phoneController.text = userData['phone'] ?? '';
       }
     }
   }
 
+  // Save the updated user profile information to Firebase
   Future<void> _saveUserProfile() async {
-    User? user = _auth.currentUser;
+    final user = _auth.currentUser;
     if (user != null) {
       await _database.ref('users/${user.uid}').update({
-        'name': _nameController.text,
-        'email': _emailController.text,
-        'phone': _phoneController.text,
+        'name': _nameController.text, // Save name
+        'phone': _phoneController.text, // Save phone number
       });
 
-      setState(() => _isEditing = false);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Profile updated")));
+      setState(() => _isEditing = false); // Exit editing mode after saving
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Profile updated")));
     }
   }
 
+  // Log out and navigate to the login page
   Future<void> _logOut() async {
-    try {
-      await _auth.signOut();
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginPage()),
-      );
-    } catch (e) {
-      print("Error during sign out: $e");
-    }
+    await _auth.signOut();
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginPage()));
   }
 
+  // Fetch the past bookings of the user
   Future<List<Booking>> _fetchPastBookings() async {
-    User? user = _auth.currentUser;
-    if (user == null) return [];
-
-    DataSnapshot snapshot = await _database.ref('users/${user.uid}/bookings').get();
-    if (snapshot.exists) {
-      var bookingsData = snapshot.value as Map<dynamic, dynamic>;
-      return bookingsData.values.map((booking) => Booking(
-        slotName: booking['slotName'] ?? '',
-        time: booking['time'] ?? '',
-        duration: booking['duration'] ?? '',
-      )).toList();
+    final user = _auth.currentUser;
+    if (user != null) {
+      final snapshot = await _database.ref('users/${user.uid}/bookings').get();
+      if (snapshot.exists) {
+        final bookingsData = snapshot.value as Map;
+        return bookingsData.values.map((b) => Booking(slotName: b['slotName'], time: b['time'], duration: b['duration'])).toList();
+      }
     }
     return [];
   }
@@ -88,12 +78,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         title: const Center(child: Text('Profile')),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
+        leading: IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white), onPressed: () => Navigator.pop(context)),
       ),
-      backgroundColor: Colors.black.withOpacity(0.5),
+      backgroundColor: Colors.black.withOpacity(0.6),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -104,31 +91,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBox(height: 20),
               _buildTextField(_nameController, 'Name'),
               const SizedBox(height: 10),
-              _buildTextField(_emailController, 'Email', enabled: false),
+              _buildTextField(_emailController, 'Email', enabled: false), // Email is not editable
               const SizedBox(height: 10),
               _buildTextField(_phoneController, 'Phone Number'),
               const SizedBox(height: 20),
-
-              // Buttons side by side
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: _isEditing ? _saveUserProfile : () => setState(() => _isEditing = true),
+                    onPressed: _isEditing ? _saveUserProfile : () => setState(() => _isEditing = true), // Toggle editing mode
                     child: Text(_isEditing ? 'Save Changes' : 'Edit Profile'),
                   ),
                   ElevatedButton(
                     onPressed: _logOut,
                     child: const Text('Log Out'),
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 13),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                    ),
                   ),
                 ],
               ),
               const SizedBox(height: 40),
               const Text('Past Bookings:', style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
               const SizedBox(height: 20),
-
-              // Past bookings list
               Expanded(
                 child: FutureBuilder<List<Booking>>(
                   future: _fetchPastBookings(),
@@ -154,9 +141,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           );
                         },
                       );
-                    } else {
-                      return const Center(child: Text('No past bookings available', style: TextStyle(color: Colors.white)));
                     }
+                    return const Center(child: Text('No past bookings available', style: TextStyle(color: Colors.white)));
                   },
                 ),
               ),
@@ -167,40 +153,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  // Text field for user information
   Widget _buildTextField(TextEditingController controller, String label, {bool enabled = true}) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: TextStyle(color: Colors.white),
+        labelStyle: const TextStyle(color: Colors.white),
         fillColor: Colors.white.withOpacity(0.1),
         filled: true,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0), // Rounded corners
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
       ),
       style: const TextStyle(color: Colors.white),
-      enabled: enabled,
+      enabled: enabled && _isEditing, // Enable only when editing
     );
   }
 }
 
+// Booking model for past bookings
 class Booking {
   final String slotName;
   final String time;
   final String duration;
 
-  Booking({
-    required this.slotName,
-    required this.time,
-    required this.duration,
-  });
+  Booking({required this.slotName, required this.time, required this.duration});
 }
-
-
-
-
-
-
-
-
