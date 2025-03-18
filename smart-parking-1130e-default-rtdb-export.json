@@ -1,0 +1,108 @@
+{
+  "levels": {
+    "level1": {
+      "availableSpots": 8,
+      "spots": {
+        "1a": {
+          "status": 1
+        },
+        "2a": {
+          "status": 1
+        },
+        "3a": {
+          "status": 1
+        },
+        "4a": {
+          "status": 1
+        },
+        "5a": {
+          "status": 1
+        },
+        "6a": {
+          "status": 1
+        },
+        "7a": {
+          "status": 1
+        },
+        "8a": {
+          "status": 1
+        }
+      },
+      "totalSpots": 8
+    },
+    "level2": {
+      "availableSpots": 8,
+      "spots": {
+        "1b": {
+          "status": 1
+        },
+        "2b": {
+          "status": 1
+        },
+        "3b": {
+          "status": 1
+        },
+        "4b": {
+          "status": 1
+        },
+        "5b": {
+          "status": 1
+        },
+        "6b": {
+          "status": 1
+        },
+        "7b": {
+          "status": 1
+        },
+        "8b": {
+          "status": 1
+        }
+      },
+      "totalSpots": 8
+    },
+    "level3": {
+      "availableSpots": 8,
+      "spots": {
+        "1c": {
+          "status": 1
+        },
+        "2c": {
+          "status": 1
+        },
+        "3c": {
+          "status": 1
+        },
+        "4c": {
+          "status": 1
+        },
+        "5c": {
+          "status": 1
+        },
+        "6c": {
+          "status": 1
+        },
+        "7c": {
+          "status": 1
+        },
+        "8c": {
+          "status": 1
+        }
+      },
+      "totalSpots": 8
+    }
+  },
+  "users": {
+    "tOHKjGWlyFN5rmqSjmPm66d0Xif1": {
+      "bookingHistory": {
+        "4a": {
+          "bookedAt": "2024-12-10T16:20:59.892126",
+          "spotId": "4a"
+        }
+      },
+      "email": "",
+      "name": "Manny",
+      "phone": ""
+    }
+  }
+}
+

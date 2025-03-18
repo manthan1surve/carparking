@@ -1,0 +1,195 @@
+{
+  "levels": {
+    "level1": {
+      "totalSpots": 8,
+      "availableSpots": 8,
+      "spots": {
+        "1680392789000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392795000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392801000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392807000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392812000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392818000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392824000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392830000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        }
+      }
+    },
+    "level2": {
+      "totalSpots": 8,
+      "availableSpots": 8,
+      "spots": {
+        "1680392835000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392840000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392845000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392850000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392855000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392860000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392865000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392870000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        }
+      }
+    },
+    "level3": {
+      "totalSpots": 8,
+      "availableSpots": 8,
+      "spots": {
+        "1680392875000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392880000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392885000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392890000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392895000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392900000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392905000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        },
+        "1680392910000": {
+          "status": 1,
+          "lastUpdated": null,
+          "bookedBy": null,
+          "bookedAt": null
+        }
+      }
+    }
+  },
+  "users": {
+    "userId1": {
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "bookingHistory": {
+        "1680392789000": {
+          "levelId": "level1",
+          "spotId": "1680392789000",
+          "bookedAt": "2024-12-10T12:00:00Z"
+        },
+        "1680392795000": {
+          "levelId": "level1",
+          "spotId": "1680392795000",
+          "bookedAt": "2024-12-10T13:30:00Z"
+        }
+      }
+    },
+    "userId2": {
+      "name": "Jane Smith",
+      "email": "janesmith@example.com",
+      "bookingHistory": {
+        "1680392801000": {
+          "levelId": "level2",
+          "spotId": "1680392801000",
+          "bookedAt": "2024-12-10T14:00:00Z"
+        }
+      }
+    }
+  }
+}

@@ -103,7 +103,7 @@ class _ParkingSpaceScreenState3 extends State<ParkingSpaceScreen3> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ReservePage(slotKey: spotId, slotName: spotName),
+                    builder: (context) => ReservePage(slotKey: spotId, slotName: spotName,levelId: levelId),
                   ),
                 );
               },

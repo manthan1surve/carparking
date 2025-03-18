@@ -5,8 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 class ReservePage extends StatefulWidget {
   final String slotKey;
   final String slotName;
+  final String levelId;
 
-  const ReservePage({super.key, required this.slotKey, required this.slotName});
+  const ReservePage({Key? key, required this.slotKey, required this.slotName, required this.levelId})
+      : super(key: key);
 
   @override
   _ReservePageState createState() => _ReservePageState();
@@ -37,7 +39,7 @@ class _ReservePageState extends State<ReservePage> {
 
   // Reserve parking spot and update database
   Future<void> reserveParkingSpot() async {
-    final ref = _database.ref('levels/level1/spots/${widget.slotKey}');
+    final ref = _database.ref('levels/${widget.levelId}/spots/${widget.slotKey}');
     final currentTime = DateTime.now().toIso8601String();
 
     // Get current user
@@ -71,14 +73,14 @@ class _ReservePageState extends State<ReservePage> {
 
   // Add booking history to the user's data
   Future<void> _addBookingHistory(String userId, String spotId, String bookedAt) async {
-    DatabaseReference userRef = _database.ref('users/$userId/bookingHistory/$spotId');
+    DatabaseReference userRef = _database.ref('users/$userId/bookingHistory');
 
     try {
       await userRef.set({
         'spotId': spotId,
         'bookedAt': bookedAt,
       });
-      print('Booking history written to users/$userId/bookingHistory/$spotId');
+      print('Booking history written to users/$userId/bookingHistory');
     } catch (e) {
       print('Failed to write booking history: $e');
     }
@@ -91,9 +93,12 @@ class _ReservePageState extends State<ReservePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Reservation Confirmed'),
-          content: Text(
-            'You have successfully reserved ${widget.slotName} for $selectedDuration.\nAmount: ₹${amountToPay.toStringAsFixed(2)}',
-            style: TextStyle(fontSize: 16),
+          content: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              'You have successfully reserved ${widget.slotName} for $selectedDuration.\nAmount: ₹${amountToPay.toStringAsFixed(2)}',
+              style: TextStyle(fontSize: 16),
+            ),
           ),
           actions: [
             TextButton(
@@ -116,26 +121,36 @@ class _ReservePageState extends State<ReservePage> {
       children: [
         Text(
           label,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black87),
         ),
         const SizedBox(height: 8),
-        DropdownButton<String>(
-          value: currentValue,
-          onChanged: onChanged,
-          isExpanded: true,
-          style: TextStyle(fontSize: 16, color: Colors.black),
-          iconSize: 30,
-          elevation: 16,
-          underline: Container(
-            height: 2,
-            color: Colors.blueAccent,
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white, // Background color for rounded container
+            borderRadius: BorderRadius.circular(12), // Rounded corners
+            boxShadow: [BoxShadow(blurRadius: 4, color: Colors.grey.withOpacity(0.2), spreadRadius: 2)],
           ),
-          items: options.map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
+          child: DropdownButton<String>(
+            value: currentValue,
+            onChanged: onChanged,
+            isExpanded: true,
+            style: TextStyle(fontSize: 16, color: Colors.black),
+            iconSize: 24,
+            elevation: 8,
+            underline: Container(
+              height: 2,
+              color: Colors.blueAccent,
+            ),
+            items: options.map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                  child: Text(value),
+                ),
+              );
+            }).toList(),
+          ),
         ),
       ],
     );
@@ -146,7 +161,7 @@ class _ReservePageState extends State<ReservePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Reserve Parking - ${widget.slotName}'),
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.blueGrey,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -154,9 +169,7 @@ class _ReservePageState extends State<ReservePage> {
           children: [
             Text(
               'Reserve ${widget.slotName}',
-              style: (Theme.of(context).textTheme.headlineMedium ??
-                  TextStyle(fontSize: 24, fontWeight: FontWeight.bold))
-                  .copyWith(fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.blueGrey),
             ),
             const SizedBox(height: 20),
 
@@ -191,7 +204,7 @@ class _ReservePageState extends State<ReservePage> {
               child: ElevatedButton(
                 onPressed: reserveParkingSpot,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey,
+                  backgroundColor: Colors.blueAccent,
                   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                   textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

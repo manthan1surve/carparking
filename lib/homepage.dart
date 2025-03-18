@@ -13,6 +13,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(debugShowCheckedModeBanner: false, home: const Homepage());
@@ -21,62 +22,59 @@ class MyApp extends StatelessWidget {
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
+
   @override
-  State<Homepage> createState() => _HomepageState();
+  _HomepageState createState() => _HomepageState();
 }
 
 class _HomepageState extends State<Homepage> {
-  late double deviceWidth, deviceHeight;
-
   @override
   Widget build(BuildContext context) {
-    deviceWidth = MediaQuery.of(context).size.width;
-    deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Center(child: Text("", style: TextStyle(fontSize: 25))),
-        backgroundColor: Colors.transparent,
+        title: const Text('Parking Levels', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.grey,
         elevation: 0,
+        centerTitle: true, // Ensures the title is centered
         actions: [
           IconButton(
             icon: const Icon(Icons.person, color: Colors.black),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ProfileScreen()),
-              );
-            },
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfileScreen()),
+            ),
           ),
         ],
       ),
-      body: Center(
-        child: Container(
-          width: deviceWidth,
-          height: deviceHeight,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/back.png'),
-              fit: BoxFit.contain,
-              alignment: Alignment.center,
-            ),
+      body: _buildBody(context),
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
+    return Center(
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/back.png'),
+            fit: BoxFit.cover, // Ensure the image covers the screen
+            alignment: Alignment.center,
           ),
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: SafeArea(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 150),
-                  _buildLevelButton('Level 1', ParkingSpaceScreen1()),
-                  const SizedBox(height: 20),
-                  _buildLevelButton('Level 2', ParkingSpaceScreen2()),
-                  const SizedBox(height: 20),
-                  _buildLevelButton('Level 3', ParkingSpaceScreen3()),
-                  const SizedBox(height: 75),
-                ],
-              ),
+        ),
+        child: SafeArea(
+          child: Center( // Ensures the content is centered both vertically and horizontally
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // Centers the Column vertically
+              mainAxisAlignment: MainAxisAlignment.center, // Redundant but ensures centering
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildLevelButton(context, 'Level 1', ParkingSpaceScreen1()),
+                const SizedBox(height: 20),
+                _buildLevelButton(context, 'Level 2', ParkingSpaceScreen2()),
+                const SizedBox(height: 20),
+                _buildLevelButton(context, 'Level 3', ParkingSpaceScreen3()),
+              ],
             ),
           ),
         ),
@@ -84,12 +82,9 @@ class _HomepageState extends State<Homepage> {
     );
   }
 
-  // A helper method to build each level button with smooth transition
-  Widget _buildLevelButton(String level, Widget nextScreen) {
+  Widget _buildLevelButton(BuildContext context, String level, Widget nextScreen) {
     return GestureDetector(
-      onTap: () {
-        _navigateWithTransition(nextScreen);
-      },
+      onTap: () => _navigateWithFadeTransition(context, nextScreen),
       child: Container(
         height: 150,
         width: 170,
@@ -112,11 +107,7 @@ class _HomepageState extends State<Homepage> {
             const SizedBox(height: 10),
             Text(
               level,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0,
-              ),
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20.0),
             ),
           ],
         ),
@@ -124,26 +115,40 @@ class _HomepageState extends State<Homepage> {
     );
   }
 
-  // Custom transition to slide up the next screen
-  void _navigateWithTransition(Widget nextScreen) {
+  // Fade-in transition with smooth effect
+  void _navigateWithFadeTransition(BuildContext context, Widget nextScreen) {
     Navigator.push(
       context,
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) => nextScreen,
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          // Slide up transition
-          var begin = const Offset(0.0, 1.0); // Start from the bottom
-          var end = Offset.zero; // End at the current position
-          var curve = Curves.easeInOut; // Smooth curve
-          var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-          var offsetAnimation = animation.drive(tween);
-
-          return SlideTransition(position: offsetAnimation, child: child);
+          var fadeAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: animation, curve: Curves.easeInOut));
+          return FadeTransition(opacity: fadeAnimation, child: child);
         },
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,0 +1,144 @@
+{
+  "parkingLots": {
+    "lot1": {
+      "name": "Lot 1",
+      "totalSpots": 24,   // 3 levels * 8 spots each
+      "availableSpots": 18,  // Available spots across all 3 levels
+      "levels": {
+        "level1": {
+          "totalSpots": 8,
+          "availableSpots": 6,
+          "spots": {
+            "1680392789000": {
+              "status": "available",
+              "lastUpdated": "2024-12-02T10:00:00Z",
+              "bookedBy": null,
+              "bookedAt": null
+            },
+            "1680392795000": {
+              "status": "booked",
+              "lastUpdated": "2024-12-02T10:30:00Z",
+              "bookedBy": "user1",
+              "bookedAt": "2024-12-02T10:30:00Z"
+            },
+            "1680392801000": {
+              "status": "available",
+              "lastUpdated": "2024-12-02T09:00:00Z",
+              "bookedBy": null,
+              "bookedAt": null
+            },
+            "1680392807000": {
+              "status": "occupied",
+              "lastUpdated": "2024-12-02T11:00:00Z",
+              "bookedBy": "user2",
+              "bookedAt": "2024-12-02T11:00:00Z"
+            }
+            // More spots for level 1...
+          }
+        },
+        "level2": {
+          "totalSpots": 8,
+          "availableSpots": 7,
+          "spots": {
+            "1680392813000": {
+              "status": "available",
+              "lastUpdated": "2024-12-02T09:30:00Z",
+              "bookedBy": null,
+              "bookedAt": null
+            },
+            // More spots for level 2...
+          }
+        },
+        "level3": {
+          "totalSpots": 8,
+          "availableSpots": 5,
+          "spots": {
+            "1680392818000": {
+              "status": "available",
+              "lastUpdated": "2024-12-02T08:00:00Z",
+              "bookedBy": null,
+              "bookedAt": null
+            },
+            // More spots for level 3...
+          }
+        }
+      }
+    },
+    "lot2": {
+      "name": "Lot 2",
+      "totalSpots": 24,   // 3 levels * 8 spots each
+      "availableSpots": 16,
+      "levels": {
+        "level1": {
+          "totalSpots": 8,
+          "availableSpots": 5,
+          "spots": {
+            "1680392824000": {
+              "status": "available",
+              "lastUpdated": "2024-12-02T08:30:00Z",
+              "bookedBy": null,
+              "bookedAt": null
+            },
+            // More spots for level 1...
+          }
+        },
+        "level2": {
+          "totalSpots": 8,
+          "availableSpots": 6,
+          "spots": {
+            "1680392829000": {
+              "status": "available",
+              "lastUpdated": "2024-12-02T07:30:00Z",
+              "bookedBy": null,
+              "bookedAt": null
+            },
+            // More spots for level 2...
+          }
+        },
+        "level3": {
+          "totalSpots": 8,
+          "availableSpots": 5,
+          "spots": {
+            "1680392835000": {
+              "status": "available",
+              "lastUpdated": "2024-12-02T06:30:00Z",
+              "bookedBy": null,
+              "bookedAt": null
+            },
+            // More spots for level 3...
+          }
+        }
+      }
+    }
+  },
+  "users": {
+    "user1": {
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "bookings": {
+        "booking1": {
+          "lotId": "lot1",
+          "levelId": "level1",  // Identifies the level where the spot is booked
+          "spotId": "1680392795000",  // Unique spot ID
+          "bookedAt": "2024-12-02T10:30:00Z",
+          "status": "booked"
+        }
+        // More bookings...
+      }
+    },
+    "user2": {
+      "name": "Jane Smith",
+      "email": "janesmith@example.com",
+      "bookings": {
+        "booking1": {
+          "lotId": "lot1",
+          "levelId": "level2",  // Identifies the level where the spot is booked
+          "spotId": "1680392807000",  // Unique spot ID
+          "bookedAt": "2024-12-02T11:00:00Z",
+          "status": "booked"
+        }
+        // More bookings...
+      }
+    }
+  }
+}
