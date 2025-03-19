@@ -52,7 +52,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDiJ5HPIFAdXDpvAazum8T_gsA-qZSzQ-0',
+    apiKey: '',
     appId: '1:247859388587:ios:fb6eabe30e811ee55057ee',
     messagingSenderId: '247859388587',
     projectId: 'smart-parking-1130e',
@@ -61,7 +61,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDiJ5HPIFAdXDpvAazum8T_gsA-qZSzQ-0',
+    apiKey: '',
     appId: '1:247859388587:ios:fb6eabe30e811ee55057ee',
     messagingSenderId: '247859388587',
     projectId: 'smart-parking-1130e',
@@ -70,7 +70,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAGnXvKWz4h3JS8Od67jczyAQRaHxYS8wg',
+    apiKey: '',
     appId: '1:247859388587:web:13268d771a2532195057ee',
     messagingSenderId: '247859388587',
     projectId: 'smart-parking-1130e',
